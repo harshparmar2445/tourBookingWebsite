@@ -10,10 +10,8 @@ const { listenerCount } = require('../models/userModel');
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     // 1) Get the currently booked tour ID from the request parameters
     const tour = await Tour.findById(req.params.tourId);
-    // Debugging: Log the tour object
-    // console.log('Tour Data:', tour);
-    console.log(req.user); // To check if the user is defined
-    console.log(req.params); // To check if the params are correct
+    //console.log(tour);
+    
     // 2) Create checkout session
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -40,8 +38,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         ]
     });
 
-     // Debugging: Log the session object to check if line_items are correctly created
-     console.log('Stripe Session:', session);
 
     // 3) Create session as response
     res.status(200).json({

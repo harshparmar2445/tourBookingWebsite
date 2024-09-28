@@ -10423,6 +10423,7 @@
       });
       if (res.data.status = "success") location.reload(true);
     } catch (err) {
+      console.log(err.response);
       showAlert("error", "Error logging out! Try agin");
     }
   };
@@ -10451,7 +10452,6 @@
       const session = await axios_default(
         `http://127.0.0.1:3000/api/v1/bookings/checkout-session/${tourId}`
       );
-      console.log("Session:", session.data);
       const result = await stripe.redirectToCheckout({
         sessionId: session.data.session.id
       });
@@ -10491,7 +10491,6 @@
       form.append("name", document.getElementById("name").value);
       form.append("email", document.getElementById("email").value);
       form.append("photo", document.getElementById("photo").files[0]);
-      console.log(form);
       updateSettings(form, "data");
     });
   }
